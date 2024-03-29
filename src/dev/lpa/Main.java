@@ -1,7 +1,6 @@
 package dev.lpa;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,8 +14,15 @@ public class Main {
         List<Student> students = new ArrayList<>(List.of(bob, bill));
         List<Student> studentsFirstCopy = new ArrayList<>(students);
         List<Student> studentsSecondCopy = List.copyOf(students);
+        List<Student> studentsThirdCopy = Collections.unmodifiableList(students);
+
 
         studentsFirstCopy.add(new Student("Bonnie", new StringBuilder()));
+        // Impossible; list.copyOf makes unmodifiable array
+//        studentsThirdCopy.set(0, new Student("Bonnie", new StringBuilder()));
+        // Can't sort it either
+        studentsFirstCopy.sort(Comparator.comparing(Student::getName));
+        students.add(new Student("Bonnie", new StringBuilder()));
         bobsNotes.append("Bob was one of my first students");
 
         StringBuilder bonniesNotes = studentsFirstCopy.get(2).getStudentNotes();
@@ -29,6 +35,9 @@ public class Main {
         System.out.println("--------------------");
 
         studentsSecondCopy.forEach(System.out::println);
+        System.out.println("--------------------");
+
+        studentsThirdCopy.forEach(System.out::println);
         System.out.println("--------------------");
 
 
